@@ -1,0 +1,107 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <form #f2="ngForm" class="form-horizontal" novalidate (ngSubmit)="save(f2.value, f2.valid)">
+                        <div class="card-header card-header-text" data-background-color="rose">
+                            <h4 class="card-title">User Entry</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Main Limit:
+                                            <span class="star">*</span>
+                                        </label>
+                                        <input class="form-control" type="number" name="number" number="true" min="1" max="20000000" [ngModel]="typeValidation.number"
+                                            required #number="ngModel">
+                                        
+                                            <small [hidden]="number.valid || (number.pristine && !f2.submitted)" class="text-danger">
+                                             Amount must be bigger than 0 and smaller than 20000000
+                                        </small>
+                                    
+                                    <!--
+                                        <small [hidden]="!number.errors.min">
+                                                Amount must be bigger than 0 and smaller than 5
+                                        </small>
+                                        <small [hidden]="!number.errors.max">
+                                                Amount must be bigger than 0 and smaller than 5
+                                        </small>
+                                    -->
+                                    
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Main Retention:
+                                            <span class="star">*</span>
+                                        </label>
+                                        <input class="form-control" type="number" name="number2" number="true" min="1" max="20000000" [ngModel]="typeValidation.number2"
+                                            required #number2="ngModel">
+                                        <small [hidden]="number2.valid || (number2.pristine && !f2.submitted)" class="text-danger">
+                                                Amount must be bigger than 0 and smaller than 20000000
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="radio" *ngFor="let thetype of execusions">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" checked="true"  [value]="thetype" [ngModel]="typeValidation.optionsRadios" > {{thetype}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button type="submit" class="btn btn-rose btn-fill" [disabled]="!f2.valid">Validate Inputs</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-icon" data-background-color="rose">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <h4 class="card-title">Results</h4>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Reference Date</th>
+                                        <th class="text-right">Banchmark 1</th>
+                                        <th class="text-right">Benchmark 2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of rows; let i = index">
+                                        <td>{{(i+1)}}</td>
+                                        <td>{{row.date | date :'dd MMM yyyy'}}</td> 
+                                        <td class="text-right">{{row.perc}}</td>
+                                        <td class="text-right">{{row.retention | currency:'GBP':true:'4.2-2'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="loader" *ngIf="show">
+                <p style="margin-top: 30px;">Loading...</p>
+                <p>
+                    <svg class="circular" viewBox="25 25 50 50">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
+                    </svg>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
